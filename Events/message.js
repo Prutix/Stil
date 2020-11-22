@@ -3,7 +3,7 @@ const Command = require('../base/Commands.js');
 const config = require('../config.json');
 const ytdl = require('ytdl-core')
 const ytdlgetinfo = require('ytdl-getinfo');
-const { getInfo } = require('ytdl-getinfo');
+const { getInfo, getBasicInfo } = require('ytdl-getinfo');
 const type = "message";
 
 /**
@@ -28,7 +28,7 @@ function run(client, message) {
     };
     const serverQueue = queue.get(message.guild.id);
 
-    if (message.content.startsWith(`?play`)) {
+    if (message.content.startsWith(`.play`)) {
         try {
             execute(message, serverQueue);
             return
@@ -36,11 +36,11 @@ function run(client, message) {
             console.error(error)
         }
     }
-    else if (message.content.startsWith(`?skip`)) {
+    else if (message.content.startsWith(`.skip`)) {
         skip(message, serverQueue);
         return;
     }
-    else if (message.content.startsWith(`?stop`)) {
+    else if (message.content.startsWith(`.stop`)) {
             stop(message, serverQueue);
             return;
     }
@@ -68,12 +68,11 @@ async function execute(message, serverQueue) {
      * @param {ytdlgetinfo.getInfo} info song info
      */
 
-    const songInfo = await ytdl.getInfo(args[1])
+    const songInfo = await getInfo(args[1])
     const song     = {
-            title: songInfo.videoDetails.title,
-            url  : songInfo.videoDetails.video_url,
+            title: songInfo.items[0].title,
+            url  : songInfo.items[0].webpage_url,
     };
-    console.log(song)
     if (!serverQueue) {
             const queueConstruct = {
                     textChannel : message.channel,
@@ -100,7 +99,6 @@ async function execute(message, serverQueue) {
     }
     else {
             serverQueue.songs.push(song);
-            console.log(serverQueue.songs);
             return message.channel.send(`${song.title} has been added to the queue!`);
     }
     } catch (error) {

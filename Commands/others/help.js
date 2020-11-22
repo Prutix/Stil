@@ -20,7 +20,7 @@ class Help extends Command {
             .setDescription('Prefix : `?`')
             .addField('Modération', '**`kick @user` : permet de kick un utilisateur du serveur discord. \n`ban @user` : permet de bannir un utilisateur de ce serveur. \n`mute @user` : permet de rendre muet un utilisateur. \n`unmute @user` permet de rendre la parole a un utilisateur. \n`clear [nombre]` : permet de nettoyer un channel.**', false)
             .addField('Informations', '**`botinfo` : permet d\'afficher les informations relatives au bot.\n`userinfo` : permet d\'afficher les informations d\'utilisateur**', false)
-            .addField('Musique', '**`play [lien youtube]` : permet de lancer une musique (une fonction de recherche arrivera par la suite :wink:)\n`stop` : permet d\'arreter la musique en cours\n`skip` : permet de passer a la prochaine musique**')
+            .addField('Musique', '**`play [lien youtube]` : permet de lancer une musique\n`stop` : permet d\'arreter la musique en cours\n`skip` : permet de passer a la prochaine musique**')
             .addField('Autres', '**`ping` : permet d\'afficher le ping du bot \n**', false)
         this.message.channel.send(helpEmbed)
     };
